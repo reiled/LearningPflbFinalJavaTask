@@ -14,7 +14,7 @@ public class MailService <T> implements Consumer<MessageContentProvider<T>> {
         mailBox = new HashMap<>() {
             @Override
             public List<T> get(Object key) {
-                return computeIfAbsent((String) key, k -> new ArrayList<>());
+                return computeIfAbsent(String.valueOf(key), k -> new ArrayList<>());
             }
         };
     }
