@@ -1,15 +1,17 @@
 package com.pflb.learning;
 
-public class Salary extends MailMessage {
+public class Salary extends AbstractMailMessage implements MessageContentProvider<Integer> {
 
-    private final Integer salary;
+    private final Integer content;
 
-    public Salary(String from, String to, int salary) {
-        super(from, to, "");
-        this.salary = salary;
+    public Salary(String from, String to, Integer content) {
+        this.from = from;
+        this.to = to;
+        this.content = content;
     }
 
-    public Integer getSalary() {
-        return salary;
+    @Override
+    public Integer getContent() {
+        return content;
     }
 }

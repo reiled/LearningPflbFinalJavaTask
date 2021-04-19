@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class MailService <T> implements Consumer<MailMessage> {
+public class MailService <T> implements Consumer<MessageContentProvider<T>> {
 
     private final Map<String, List<T>> mailBox;
 
@@ -19,20 +19,13 @@ public class MailService <T> implements Consumer<MailMessage> {
         };
     }
 
-    @Override
-    public void accept(MailMessage mailMessage) {
-        if (mailMessage.getClass().equals(MailMessage.class)) {
-            mailBox.computeIfAbsent(mailMessage.getTo(), k -> new ArrayList<>())
-                    .add((T) mailMessage.getContent());
-        } else if (mailMessage.getClass().equals(Salary.class)) {
-            mailBox.computeIfAbsent(mailMessage.getTo(), k -> new ArrayList<>())
-                    .add((T) ((Salary)mailMessage).getSalary());
-        } else {
-            throw new RuntimeException("Тип сообщения не поддерживается");
-        }
-    }
-
     public Map<String, List<T>> getMailBox() {
         return mailBox;
+    }
+
+    @Override
+    public void accept(MessageContentProvider<T> mailMessage) {
+        mailBox.computeIfAbsent(mailMessage.getTo(), k -> new ArrayList<>())
+                .add(mailMessage.getContent());
     }
 }

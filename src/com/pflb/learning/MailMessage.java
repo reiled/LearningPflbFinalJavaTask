@@ -1,9 +1,7 @@
 package com.pflb.learning;
 
-public class MailMessage {
+public class MailMessage extends AbstractMailMessage implements MessageContentProvider<String> {
 
-    private final String from;
-    private final String to;
     private final String content;
 
     public MailMessage(String from, String to, String content) {
@@ -12,15 +10,8 @@ public class MailMessage {
         this.content = content;
     }
 
+    @Override
     public String getContent() {
         return content;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public String getTo() {
-        return to;
     }
 }
